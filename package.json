@@ -1,0 +1,42 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build"
+  },
+  "peerDependencies": {},
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "nexment-vue",
+  "author": "HelipengTony",
+  "module": "dist/nexment-vue.esm.js",
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-rc.5",
+    "rollup-plugin-sass": "^1.2.2",
+    "rollup-plugin-vue": "^6.0.0-beta.10",
+    "tsdx": "^0.13.2",
+    "typescript": "^3.9.7",
+    "vue-property-decorator": "^9.0.0"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^1.0.0-beta.6",
+    "leancloud-storage": "^4.6.1",
+    "swrv": "^0.7.1",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.5"
+  }
+}
