@@ -1,5 +1,5 @@
 import leanCloud from './initiation';
-import { nexmentConfigType } from '../../typings/index';
+import { nexmentConfigType } from '../../types/index';
 
 export interface commentsItemType {
   OID: string;

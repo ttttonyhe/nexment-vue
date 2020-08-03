@@ -1,7 +1,7 @@
 {
   "include": [
     "src",
-    "types"
+    "src/types"
   ],
   "compilerOptions": {
     "module": "esnext",
@@ -19,6 +19,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {

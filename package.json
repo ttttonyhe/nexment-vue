@@ -28,6 +28,7 @@
     "@vue/compiler-sfc": "^3.0.0-rc.5",
     "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-vue": "^6.0.0-beta.10",
+    "sass-loader": "^9.0.2",
     "tsdx": "^0.13.2",
     "typescript": "^3.9.7",
     "vue-property-decorator": "^9.0.0"
@@ -35,8 +36,10 @@
   "dependencies": {
     "@vue/composition-api": "^1.0.0-beta.6",
     "leancloud-storage": "^4.6.1",
+    "sweet-modal-vue": "^2.0.0",
     "swrv": "^0.7.1",
     "vue": "^2.6.11",
-    "vue-class-component": "^7.2.5"
+    "vue-class-component": "^7.2.5",
+    "vue-content-loader": "^0.2.3"
   }
 }

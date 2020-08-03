@@ -1,0 +1,89 @@
+.nexment-modal {
+  background: #999;
+}
+.rodal {
+  outline: none;
+}
+
+.rodal-dialog {
+  padding: 30px !important;
+  box-shadow: 0px 2px 8px rgba(213, 222, 231, 0.3);
+}
+
+.nexment-modal-replies {
+  .rodal-close {
+    position: absolute;
+    cursor: pointer;
+    top: 35px;
+    right: 35px;
+    width: 20px;
+    height: 20px;
+  }
+  .nexment-modal-text {
+    h1 {
+      margin: 0px;
+      letter-spacing: 0.5px;
+      font-size: 25px;
+    }
+    p {
+      margin: 0px;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+  }
+  .rodal-dialog {
+    width: 80% !important;
+    height: 90vh !important;
+    max-height: 90vh !important;
+    overflow: hidden;
+    overflow-y: auto;
+    @media screen and (min-width: 1000px) {
+      width: 75vh !important;
+    }
+  }
+}
+
+.nexment-modal-notification {
+  .rodal-dialog {
+    height: fit-content !important;
+  }
+  .nexment-modal-text {
+    h1 {
+      margin: 0px;
+      letter-spacing: 0.3px;
+    }
+    p {
+      letter-spacing: 0.3px;
+      color: #687a86;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+  }
+  input {
+    width: 50%;
+    height: 30px;
+    border-radius: 3px 0px 0px 3px;
+    padding: 0px 10px;
+    margin: 10px 0px;
+    border: 1px solid #cfd1d2;
+    font-size: 14px;
+    color: #687a86;
+    letter-spacing: 0.1px;
+    outline: none;
+  }
+  button {
+    background: #359aff;
+    cursor: pointer;
+    &:hover {
+      background: #0080ff;
+    }
+    color: #fff;
+    border: none;
+    padding: 8.5px 15px;
+    letter-spacing: 0.2px;
+    border-radius: 0px 3px 3px 0px;
+    margin-left: -1px;
+  }
+}

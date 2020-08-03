@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="example-container">
     <client-only>
       <NexmentContainer :config="configs" />
     </client-only>
@@ -29,5 +29,14 @@ export default Vue.extend({
   },
 });
 </script>
+<style scoped>
+.example-container {
+  width: 650px;
+  margin: 0 auto;
+  padding: 20px;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+</style>
 
 <style></style>
