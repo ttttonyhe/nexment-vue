@@ -10,26 +10,14 @@
  *   main entry
  */
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import CommentsList from '../sections/commentsList.vue';
+import CommentsList from '../sections/CommentsList.vue';
 
 // Composition API Vue 2 plugin
 import VueCompositionAPI from '@vue/composition-api';
 Vue.use(VueCompositionAPI);
 
 // Configuration type
-export interface nexmentConfigType {
-  pageKey?: string;
-  enableLinkInput?: boolean;
-  leancloud: {
-    appId: string;
-    appKey: string;
-    serverURL: string;
-  };
-  admin: {
-    name: string;
-    email: string;
-  };
-}
+import { nexmentConfigType } from '../../types/index';
 
 @Component({
   components: {
