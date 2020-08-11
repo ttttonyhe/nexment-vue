@@ -208,8 +208,6 @@ import listFetcher from '../../lib/database/getCommentsList';
 // Using require to avoid type error
 const ContentLoader = require('vue-content-loader').ContentLoader;
 
-import { nexmentConfigType } from '../../types/index';
-
 const SweetModal = require('sweet-modal-vue').SweetModal;
 const SweetModalTab = require('sweet-modal-vue').SweetModalTab;
 

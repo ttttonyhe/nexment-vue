@@ -1,18 +1,19 @@
 <template>
   <div>
-    <sweet-modal ref="repliesModalRef">This is an alert.</sweet-modal>
+    <modal name="repliesList">
+      This is an alert.
+      <button @click="closeModal()">Close</button>
+    </modal>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
-const SweetModal = require('sweet-modal-vue').SweetModal;
-const SweetModalTab = require('sweet-modal-vue').SweetModalTab;
+import Vue from "vue";
+import { defineComponent } from "@vue/composition-api";
+import VModal from "vue-js-modal";
+Vue.use(VModal);
+
 export default defineComponent({
-  name:'ReplyModal',
-  components: {
-    SweetModal,
-    SweetModalTab,
-  },
+  name: "ReplyModal",
   props: {
     type: String,
     content: Object,
@@ -21,17 +22,15 @@ export default defineComponent({
     replyToID: Number,
     replyToOID: String,
     replyToName: String,
-    visibilityFunction: Function,
     replyItem: Object,
   },
-  mounted() {
-    this.toggleModal();
-    console.log(this.$props.pageKey);
+  mounted(){
+    this.$modal.show('repliesList');
   },
   methods: {
-    toggleModal() {
-      const modalRef: any = this.$refs.repliesModalRef;
-      modalRef.open();
+    closeModal() {
+      this.$modal.hide('repliesList');
+      this.$emit("close", this.$props.replyToOID);
     },
   },
 });

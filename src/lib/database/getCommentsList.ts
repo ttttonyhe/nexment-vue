@@ -1,5 +1,4 @@
 import leanCloud from './initiation';
-import { nexmentConfigType } from '../../types/index';
 
 export interface commentsItemType {
   OID: string;
@@ -32,8 +31,8 @@ const listFetcher = (config: nexmentConfigType) => {
   ): Promise<commentsItemType[]> => {
     // Maximum reply display depth 2
     const query = new AV.Query('nexment_comments');
-    let combineData: commentsItemType[] = [];
-    let repliesData: any[] = [];
+    var combineData: commentsItemType[] = [];
+    var repliesData: any[] = [];
     // querykey is of type string, querying identifier
     query.equalTo('identifier', queryKey);
     query.descending('createdAt');

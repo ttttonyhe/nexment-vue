@@ -47,7 +47,7 @@
         </div>
       </div>
       <ul class="nexment-comments-list">
-        <div class="nexment-loading-index" v-if="state.loadingStatus">
+        <div class="nexment-loading-index" v-if="loadingStatus">
           <ContentLoader :speed="2" :width="700">
             <rect x="52" y="8" rx="3" ry="3" width="100%" height="10" />
             <rect x="52" y="30" rx="3" ry="3" width="80%" height="10" />
@@ -138,10 +138,13 @@
                     </div>
                   </div>
                 </li>
-                <div>
+                <div
+                  v-if="replyItem.hasReplies && modalVisibility[replyItem.OID]"
+                >
                   <ReplyModal
-                    v-if="replyItem.hasReplies && modalVisibility[replyItem.OID]"
+                    @close="closeModal"
                     pageKey="NB"
+                    :replyToOID="replyItem.OID"
                   />
                 </div>
               </div>
@@ -157,75 +160,83 @@
   </div>
 </template>
 <script lang="ts">
-import '../../assets/style/commentslist.scss';
+import "../../assets/style/commentslist.scss";
 // NOTE: Replace with 'vue' when migrating to Vue 3
-import { defineComponent, reactive } from '@vue/composition-api';
+import { defineComponent, reactive } from "@vue/composition-api";
 
 // SWRV feature (Composition API required)
-import useSWRV from 'swrv';
-import listFetcher from '../../lib/database/getCommentsList';
+import useSWRV from "swrv";
+import listFetcher from "../../lib/database/getCommentsList";
 
 // Using require to avoid type error
-const ContentLoader = require('vue-content-loader').ContentLoader;
+const ContentLoader = require("vue-content-loader").ContentLoader;
 
-import { nexmentConfigType } from '../../types/index';
-
-import Icons from '../icons/index.vue';
-const md5 = require('js-md5');
-import { format } from 'timeago.js';
-import Vue from 'vue';
-import VueShowdown from 'vue-showdown';
-import { markDownConfigs } from '../../configs/index';
+import Icons from "../icons/index.vue";
+import md5 from "js-md5";
+import { format } from "timeago.js";
+import Vue from "vue";
+import VueShowdown from "vue-showdown";
+import { markDownConfigs } from "../../configs/index";
 Vue.use(VueShowdown, markDownConfigs);
 
-import ReplyModal from '../modal/index.vue';
+import ReplyModal from "../modal/index.vue";
+
+interface stateType {
+  [name: string]: any;
+  modalVisibility: any;
+}
 
 export default defineComponent({
-  name: 'CommentsList',
-  props: ['config'],
+  name: "CommentsList",
+  props: ["config"],
   components: {
     ContentLoader,
     Icons,
     ReplyModal,
   },
   setup(props: { config: nexmentConfigType }) {
-    const state = reactive({
-      message: 'fuck',
+    const { data, error } = useSWRV("demoPage", listFetcher(props.config));
+    return {
+      data,
+      error,
+    };
+  },
+  data() {
+    return {
+      message: "fuck",
       loadingStatus: false,
       replyToID: null,
       replyToOID: null,
       replyToName: null,
       randomNumber: 0,
-      modalVisibility:[],
-    });
-    const { data, error } = useSWRV('demoPage', listFetcher(props.config));
-    return {
-      state,
-      data,
-      error,
-    };
+      modalVisibility: [],
+    } as stateType;
   },
   methods: {
+    closeModal(OID: string) {
+      this.$set(this.modalVisibility, OID, false);
+    },
     open() {
       const ref: any = this.$refs.modal;
       ref.open();
     },
     handleReplyClick(item: any) {
-      this.state.replyToID = item.ID;
-      this.state.replyToOID = item.OID;
-      this.state.replyToName = item.name;
-      this.state.randomNumber = Math.random();
-      window.location.href = '#nexment-comment-area';
+      this.replyToID = item.ID;
+      this.replyToOID = item.OID;
+      this.replyToName = item.name;
+      this.randomNumber = Math.random();
+      window.location.href = "#nexment-comment-area";
     },
     handleReplyClickReply(item: any) {
       if (item.hasReplies) {
-        this.state.modalVisibility[item.OID] = true;
+        // 深层 data 更新使用 Vue.set
+        this.$set(this.modalVisibility, item.OID, true);
       } else {
-        this.state.replyToID = item.ID;
-        this.state.replyToOID = item.OID;
-        this.state.replyToName = item.name;
-        this.state.randomNumber = Math.random();
-        window.location.href = '#nexment-comment-area';
+        this.replyToID = item.ID;
+        this.replyToOID = item.OID;
+        this.replyToName = item.name;
+        this.randomNumber = Math.random();
+        window.location.href = "#nexment-comment-area";
       }
     },
     adminBadge(name: string, email: string) {
@@ -239,10 +250,10 @@ export default defineComponent({
       }
     },
     tagContentClass(item: any) {
-      return 'nexment-comments-content ' + (item.tag ? '' : 'margin-top');
+      return "nexment-comments-content " + (item.tag ? "" : "margin-top");
     },
     avatarSrc(item: any) {
-      return 'https://gravatar.loli.net/avatar/' + md5(item.email) + '?d=mp';
+      return "https://gravatar.loli.net/avatar/" + md5(item.email) + "?d=mp";
     },
     commentDate(item: any) {
       return format(item.date);

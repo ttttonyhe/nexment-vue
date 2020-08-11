@@ -16,17 +16,13 @@ import CommentsList from '../sections/CommentsList.vue';
 import VueCompositionAPI from '@vue/composition-api';
 Vue.use(VueCompositionAPI);
 
-// Configuration type
-import { nexmentConfigType } from '../../types/index';
-
 @Component({
   components: {
     CommentsList,
   },
 })
-export default class Main extends Vue {
+export default class NexmentContainer extends Vue {
   // Get config props
-  @Prop()
-  config: nexmentConfigType;
+  @Prop() public config!: nexmentConfigType
 }
 </script>

@@ -1,5 +1,4 @@
 import leanCloud from './initiation';
-import { nexmentConfigType } from '../../types/index';
 
 const adminLogin = async (
   name: string,

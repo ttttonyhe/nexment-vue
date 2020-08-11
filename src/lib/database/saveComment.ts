@@ -1,5 +1,4 @@
 import leanCloud from './initiation';
-import { nexmentConfigType } from 'components/container';
 const md = require('markdown-it')();
 import fetch from 'unfetch';
 const Qs = require('qs');
