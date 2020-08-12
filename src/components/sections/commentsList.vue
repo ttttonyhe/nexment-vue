@@ -143,8 +143,13 @@
                 >
                   <ReplyModal
                     @close="closeModal"
-                    pageKey="NB"
+                    :pageKey="config.pageKey"
                     :replyToOID="replyItem.OID"
+                    :replyToID="replyItem.ID"
+                    :replyToName="replyItem.name"
+                    :replyItem="replyItem"
+                    :content="replyItem.replyList"
+                    :config="config"
                   />
                 </div>
               </div>
@@ -195,7 +200,7 @@ export default defineComponent({
     ReplyModal,
   },
   setup(props: { config: nexmentConfigType }) {
-    const { data, error } = useSWRV("demoPage", listFetcher(props.config));
+    const { data, error } = useSWRV(props.config.pageKey ? props.config.pageKey : '/', listFetcher(props.config));
     return {
       data,
       error,
@@ -215,10 +220,6 @@ export default defineComponent({
   methods: {
     closeModal(OID: string) {
       this.$set(this.modalVisibility, OID, false);
-    },
-    open() {
-      const ref: any = this.$refs.modal;
-      ref.open();
     },
     handleReplyClick(item: any) {
       this.replyToID = item.ID;

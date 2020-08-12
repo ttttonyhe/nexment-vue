@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CommentsList :config="config" />
+    <CommentsList :config="configs" />
   </div>
 </template>
 
@@ -9,12 +9,15 @@
  *   Nexment Container
  *   main entry
  */
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import CommentsList from '../sections/CommentsList.vue';
+import { Component, Vue, Prop } from "vue-property-decorator";
+import CommentsList from "../sections/CommentsList.vue";
 
 // Composition API Vue 2 plugin
-import VueCompositionAPI from '@vue/composition-api';
+import VueCompositionAPI from "@vue/composition-api";
 Vue.use(VueCompositionAPI);
+
+// Identifier generator
+import getIdentifier from "../../lib/utils/getIdentifier";
 
 @Component({
   components: {
@@ -23,6 +26,12 @@ Vue.use(VueCompositionAPI);
 })
 export default class NexmentContainer extends Vue {
   // Get config props
-  @Prop() public config!: nexmentConfigType
+  @Prop() public config!: nexmentConfigType;
+  configs: nexmentConfigType = this.$props.config;
+  mounted() {
+    if (this.$props.config.pageKey === undefined) {
+      this.$set(this.configs, "pageKey", getIdentifier().identifierData);
+    }
+  }
 }
 </script>

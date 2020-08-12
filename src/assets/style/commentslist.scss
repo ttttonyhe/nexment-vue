@@ -53,7 +53,7 @@ $greyerGrey: #949494;
   .nexment-comments-list-item {
     cursor: pointer;
     padding-right: 15px;
-    margin:-2px 0px 10px 0px;
+    margin: -2px 0px 10px 0px;
     .nexment-reply-icon-reply {
       display: none;
     }
@@ -290,5 +290,27 @@ $borderColor: #e8e8e8;
         font-weight: 500;
       }
     }
+  }
+}
+
+.nexment-modal-header {
+  display: block;
+  float: right;
+  margin-top: 6px;
+}
+
+.vm--modal {
+  padding: 30px;
+  width: 100%;
+  transform: scale(0.95);
+  left: 0px;
+  top: 15px;
+  max-height: 90vh !important;
+  overflow-y: scroll;
+  box-shadow: 0px 2px 8px rgba(213, 222, 231, 0.3);
+  @media screen and (min-width: 1000px) {
+    transform: none !important;
+    width: 75vh !important;
+    left: calc((100% - 75vh) / 2) !important;
   }
 }
