@@ -5,6 +5,19 @@
       <p>@{{ replyToName }}</p>
     </div>
     <div class="nexment-reply-container">
+      <CommentsArea
+        :config="config"
+        @reloadFunc="changeLoadingStatus"
+        :pageKey="config.pageKey"
+        :replyTo="nowReplyToID"
+        :replyToOID="nowReplyToOID"
+        :replyToName="nowReplyToName"
+        :primaryReplyTo="replyToID"
+        :primaryReplyToOID="replyToOID"
+        :primaryReplyToName="replyToName"
+        @resetFunc="resetReply"
+        @refetchFunc="refetchData"
+      />
       <ul class="nexment-comments-list">
         <li class="nexment-comments-list-item" :id="replyItem.ID.toString()">
           <div
@@ -40,13 +53,9 @@
           <div>
             <ul class="nexment-comments-reply-list">
               <div class="nexment-loading" v-if="loadingStatus">
-                <ContentLoader :speed="2" :width="700">
+                <ContentLoader :speed="2" :width="700" :height="60">
                   <rect x="52" y="8" rx="3" ry="3" width="100%" height="10" />
                   <rect x="52" y="30" rx="3" ry="3" width="80%" height="10" />
-                  <rect x="52" y="56" rx="3" ry="3" width="6" height="38" />
-                  <rect x="69" y="56" rx="3" ry="3" width="60%" height="6" />
-                  <rect x="69" y="72" rx="3" ry="3" width="50%" height="6" />
-                  <rect x="69" y="88" rx="3" ry="3" width="30%" height="6" />
                   <circle cx="20" cy="24" r="20" />
                 </ContentLoader>
               </div>
@@ -87,9 +96,6 @@
                           {{ item.replyList.length }} 条回复
                           <Icons name="down" />
                         </b>
-                        <em class="nexment-reply-icon-reply">
-                          <Icons name="reply" />
-                        </em>
                       </h5>
                       <p class="nexment-comments-des">{{ item.tag }}</p>
                       <div :class="tagContentClass(item)">
@@ -98,6 +104,34 @@
                     </div>
                   </div>
                 </li>
+                <div v-if="item.hasReplies && modalVisibility[item.OID]">
+                  <div class="nexment-modal-replies">
+                    <modal
+                      :name="'repliesModal' + item.OID"
+                      :adaptive="true"
+                      height="90vh"
+                      @closed="closeModal(item.OID)"
+                    >
+                      <div class="nexment-modal-header">
+                        <a @click="closeModal(item.OID)">
+                          <Icons name="modalCancel" />
+                        </a>
+                      </div>
+                      <div>
+                        <RepliesList
+                          :dataContent="item.replyList"
+                          :pageKey="pageKey"
+                          :replyToID="item.ID"
+                          :replyToOID="item.OID"
+                          :replyToName="item.name"
+                          :replyItem="item"
+                          :config="config"
+                          @refetchFunc="refetchData"
+                        />
+                      </div>
+                    </modal>
+                  </div>
+                </div>
               </div>
               <div v-if="!dataContent.length" class="nexment-empty">
                 <div><Icons name="comments" /></div>
@@ -128,13 +162,19 @@ import { format } from "timeago.js";
 import Vue from "vue";
 import VueShowdown from "vue-showdown";
 import { markDownConfigs } from "../../configs/index";
-Vue.use(VueShowdown, markDownConfigs);
+Vue.use(VueShowdown, {
+  options: markDownConfigs,
+});
+
+import VModal from "vue-js-modal";
+Vue.use(VModal);
+
+import CommentsArea from "../sections/CommentsArea.vue";
 
 export default defineComponent({
   name: "RepliesList",
   props: [
     "dataContent",
-    "replyTo",
     "pageKey",
     "replyToID",
     "replyToOID",
@@ -145,41 +185,53 @@ export default defineComponent({
   components: {
     ContentLoader,
     Icons,
+    CommentsArea,
   },
   data() {
     return {
       loadingStatus: false,
-      nowReplyToID: null,
-      nowReplyToOID: null,
-      nowReplyToName: null,
-      nowRandomNumber: 0,
+      nowReplyToID: this.replyToID,
+      nowReplyToOID: this.replyToOID,
+      nowReplyToName: this.replyToName,
+      modalVisibility: [],
     } as {
       [propsName: string]: any;
     };
   },
   setup(props: any) {
     console.log(props);
-    const { data, error } = useSWRV(props.config.pageKey, listFetcher(props.config));
+    const { data, error } = useSWRV(
+      props.config.pageKey,
+      listFetcher(props.config)
+    );
     return {
       data,
       error,
     };
   },
   methods: {
+    closeModal(OID: string) {
+      this.$modal.hide("repliesModal" + OID);
+      this.$set(this.modalVisibility, OID, false);
+    },
     handleReplyClick(item: any) {
       this.nowReplyToID = item.ID;
       this.nowReplyToOID = item.OID;
       this.nowReplyToName = item.name;
-      this.nowRandomNumber = Math.random();
       window.location.href = "#nexment-comment-area";
     },
     handleReplyClickReply(item: any) {
       if (item.hasReplies) {
+        console.log("fuck");
+        this.$set(this.modalVisibility, item.OID, true);
+        // 数据渲染延迟处理
+        setTimeout(() => {
+          this.$modal.show("repliesModal" + item.OID);
+        }, 0);
       } else {
         this.nowReplyToID = item.ID;
         this.nowReplyToOID = item.OID;
         this.nowReplyToName = item.name;
-        this.nowRandomNumber = Math.random();
         window.location.href = "#nexment-comment-area";
       }
     },
@@ -202,6 +254,17 @@ export default defineComponent({
     commentDate(item: any) {
       return format(item.date);
     },
+    changeLoadingStatus() {
+      this.loadingStatus = !this.loadingStatus;
+    },
+    resetReply() {
+      this.nowReplyToID = "";
+      this.nowReplyToOID = "";
+      this.nowReplyToName = "";
+    },
+    refetchData(){
+      this.$emit("refetchFunc");
+    }
   },
 });
 </script>

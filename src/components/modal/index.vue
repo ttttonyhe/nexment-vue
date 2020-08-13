@@ -14,12 +14,13 @@
       <div>
         <RepliesList
           :dataContent="content"
-          :replyTo="replyTo"
+          :replyToID="replyToID"
           :pageKey="pageKey"
           :replyToOID="replyToOID"
           :replyToName="replyToName"
           :replyItem="replyItem"
           :config="config"
+          @refetchFunc="refetchData"
         />
       </div>
     </modal>
@@ -61,6 +62,9 @@ export default defineComponent({
     modalCloseHandler() {
       this.$emit("close", this.$props.replyToOID);
     },
+    refetchData(){
+      this.$emit("refetchFunc");
+    }
   },
 });
 </script>

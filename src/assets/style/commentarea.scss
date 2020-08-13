@@ -10,6 +10,7 @@
   max-height: 240px;
   overflow: hidden;
   display: flex;
+  outline: none;
   .nexment-emoji-section {
     max-height: 240px;
     overflow: hidden;
@@ -104,7 +105,7 @@
     margin-left: -1px;
   }
   .nexment-tag-button {
-    padding: 6.6px 15px 6.7px 15px;
+    padding: 6.2px 15px 7.2px 15px;
   }
   .nexment-popover-input {
     margin-left: 8.5%;
@@ -166,7 +167,7 @@ $borderColor: #e8e8e8;
     }
     .nexment-md-preview {
       flex: 1;
-      padding: 11px 12px 10px 12px;
+      padding: 11px 12px 9px 12px;
       font-size: 10px;
       margin-top: -2px;
       border-bottom: 1px solid $borderColor;
@@ -266,4 +267,88 @@ $borderColor: #e8e8e8;
       font-size: 10px !important;
     }
   }
+}
+
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+  border-radius: 4px;
+  box-shadow: 0px 1px 8px #eee;
+  border: 1px solid #eee;
+  background: #ffffff;
+
+  .tooltip-inner {
+    background: #ffffff;
+    color: #666666;
+    padding: 5px 10px 6px 10px;
+    border-radius: 4px;
+  }
+
+  .tooltip-arrow {
+    display: none;
+  }
+
+  &[x-placement^="top"] {
+    margin-bottom: 5px;
+  }
+
+  &.popover {
+    $color: #f9f9f9;
+
+    .popover-inner {
+      background: $color;
+      color: black;
+      padding: 24px;
+      border-radius: 5px;
+      box-shadow: 0 5px 30px rgba(black, 0.1);
+    }
+
+    .popover-arrow {
+      border-color: $color;
+    }
+  }
+
+  &[aria-hidden="true"] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+  }
+
+  &[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.15s;
+  }
+}
+
+.nexment-comment-area-popover {
+  display: inline-block;
+  padding: 0px 10px 1px 5px;
+  div:first-child {
+    padding: 0px !important;
+    button {
+      background: transparent !important;
+    }
+  }
+}
+
+.nexment-comment-area-popover-inner {
+  padding: 0px !important;
+}
+
+.nexment-popover-emoji {
+  margin-left: 15px;
+  margin-top: -1px;
+}
+
+.nexment-popover-tag {
+  top: -8px !important;
+  margin-left: 3px;
+}
+.popover-emoji-inner {
+  color: #333 !important;
+}
+
+.nexment-popover-tooltip {
+  margin-bottom: 10px !important;
 }

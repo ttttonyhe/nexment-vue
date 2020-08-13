@@ -1,5 +1,5 @@
 <template>
-  <em>
+  <span>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -221,7 +221,7 @@
         fill="rgba(133,144,166,1)"
       />
     </svg>
-  </em>
+  </span>
 </template>
 
 <script lang="ts">

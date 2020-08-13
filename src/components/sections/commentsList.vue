@@ -30,6 +30,19 @@
       </div>
     </div>
     <div v-else>
+      <CommentsArea
+        :config="config"
+        @reloadFunc="changeLoadingStatus"
+        :pageKey="config.pageKey"
+        :replyTo="replyToID"
+        :replyToOID="replyToOID"
+        :replyToName="replyToName"
+        :primaryReplyTo="undefined"
+        :primaryReplyToOID="undefined"
+        :primaryReplyToName="undefined"
+        @resetFunc="resetReply"
+        @refetchFunc="refetchData"
+      />
       <div class="nexment-header">
         <div>
           <h1>{{ data.length }} 条评论</h1>
@@ -47,14 +60,14 @@
         </div>
       </div>
       <ul class="nexment-comments-list">
-        <div class="nexment-loading-index" v-if="loadingStatus">
-          <ContentLoader :speed="2" :width="700">
+        <div
+          class="nexment-loading-index nexment-loading-list"
+          v-if="loadingStatus"
+        >
+          <ContentLoader :speed="2" :width="700" :height="60">
             <rect x="52" y="8" rx="3" ry="3" width="100%" height="10" />
             <rect x="52" y="30" rx="3" ry="3" width="80%" height="10" />
-            <rect x="52" y="56" rx="3" ry="3" width="6" height="38" />
-            <rect x="69" y="56" rx="3" ry="3" width="60%" height="6" />
-            <rect x="69" y="72" rx="3" ry="3" width="50%" height="6" />
-            <rect x="69" y="88" rx="3" ry="3" width="30%" height="6" />
+            <circle cx="20" cy="24" r="20" />
           </ContentLoader>
         </div>
       </ul>
@@ -150,6 +163,7 @@
                     :replyItem="replyItem"
                     :content="replyItem.replyList"
                     :config="config"
+                    @refetchFunc="refetchData"
                   />
                 </div>
               </div>
@@ -182,9 +196,13 @@ import { format } from "timeago.js";
 import Vue from "vue";
 import VueShowdown from "vue-showdown";
 import { markDownConfigs } from "../../configs/index";
-Vue.use(VueShowdown, markDownConfigs);
+Vue.use(VueShowdown, {
+  options: markDownConfigs,
+});
 
 import ReplyModal from "../modal/index.vue";
+
+import CommentsArea from "../sections/CommentsArea.vue";
 
 interface stateType {
   [name: string]: any;
@@ -198,12 +216,17 @@ export default defineComponent({
     ContentLoader,
     Icons,
     ReplyModal,
+    CommentsArea,
   },
   setup(props: { config: nexmentConfigType }) {
-    const { data, error } = useSWRV(props.config.pageKey ? props.config.pageKey : '/', listFetcher(props.config));
+    const { data, error, mutate } = useSWRV(
+      props.config.pageKey ? props.config.pageKey : "/",
+      listFetcher(props.config)
+    );
     return {
       data,
       error,
+      mutate,
     };
   },
   data() {
@@ -213,7 +236,6 @@ export default defineComponent({
       replyToID: null,
       replyToOID: null,
       replyToName: null,
-      randomNumber: 0,
       modalVisibility: [],
     } as stateType;
   },
@@ -258,6 +280,17 @@ export default defineComponent({
     },
     commentDate(item: any) {
       return format(item.date);
+    },
+    changeLoadingStatus() {
+      this.loadingStatus = !this.loadingStatus;
+    },
+    resetReply() {
+      this.replyToID = "";
+      this.replyToOID = "";
+      this.replyToName = "";
+    },
+    refetchData() {
+      this.mutate();
     },
   },
 });
