@@ -24,6 +24,9 @@
 </template>
 
 <script lang="ts">
+/** 
+  Emoji selection card
+*/
 import { defineComponent } from "@vue/composition-api";
 import emojis from "./emoji";
 

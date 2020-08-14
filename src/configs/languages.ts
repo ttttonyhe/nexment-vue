@@ -1,3 +1,6 @@
+/** 
+  I18n
+*/
 const browserLanguages = navigator.language.substr(0, 2);
 
 if (browserLanguages === "zh") {
@@ -127,6 +130,12 @@ const langPack: any = {
   },
 };
 
+/**
+ * Get I18n language
+ *
+ * @param {string} name
+ * @returns
+ */
 const getLang = (name: string) => {
   return langPack[name][locale];
 };

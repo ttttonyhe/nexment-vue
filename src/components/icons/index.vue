@@ -238,6 +238,9 @@
 </template>
 
 <script lang="ts">
+/** 
+  Icons
+*/
 import { defineComponent } from "@vue/composition-api";
 export default defineComponent({
   name: "Icons",

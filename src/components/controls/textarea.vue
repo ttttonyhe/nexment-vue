@@ -8,6 +8,9 @@
 </template>
 
 <script lang="ts">
+/** 
+  Auto-resize textarea
+*/
 import { defineComponent } from "@vue/composition-api";
 import autosize from "autosize";
 

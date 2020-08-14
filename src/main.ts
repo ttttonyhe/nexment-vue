@@ -1,10 +1,10 @@
+/** 
+  Nexment component registration
+*/
 import NexmentContainer from "./components/container/index.vue";
 
 export default {
-  install(
-    Vue: any,
-    options: any
-  ) {
+  install(Vue: any, options: any) {
     Vue.component("NexmentContainer", NexmentContainer);
   },
 };

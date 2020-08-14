@@ -27,6 +27,9 @@
   </div>
 </template>
 <script lang="ts">
+/** 
+  Reply list modal
+*/
 import "../../assets/style/modal.scss";
 import { defineComponent } from "@vue/composition-api";
 import RepliesList from "../sections/RepliesList.vue";
@@ -59,9 +62,9 @@ export default defineComponent({
     modalCloseHandler() {
       this.$emit("close", this.$props.replyToOID);
     },
-    refetchData(){
+    refetchData() {
       this.$emit("refetchFunc");
-    }
+    },
   },
 });
 </script>

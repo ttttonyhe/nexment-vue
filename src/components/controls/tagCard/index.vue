@@ -18,6 +18,9 @@
 </template>
 
 <script lang="ts">
+/** 
+  Description tag card
+*/
 import { defineComponent } from "@vue/composition-api";
 
 // i18n

@@ -21,6 +21,9 @@
 </template>
 
 <script lang="ts">
+/** 
+  Admin verification modal
+*/
 import { defineComponent } from "@vue/composition-api";
 import adminLogin from "../../lib/database/adminLoging";
 

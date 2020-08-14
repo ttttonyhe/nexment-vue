@@ -175,13 +175,16 @@
         </li>
         <div v-if="!data.length" class="nexment-empty">
           <div><Icons name="comments" /></div>
-          <p>{{ getLang('noComments') }}</p>
+          <p>{{ getLang("noComments") }}</p>
         </div>
       </ul>
     </div>
   </div>
 </template>
 <script lang="ts">
+/** 
+  Comments list
+*/
 import "../../assets/style/commentslist.scss";
 // NOTE: Replace with 'vue' when migrating to Vue 3
 import { defineComponent, reactive } from "@vue/composition-api";
@@ -193,12 +196,19 @@ import listFetcher from "../../lib/database/getCommentsList";
 // Using require to avoid type error
 const ContentLoader = require("vue-content-loader").ContentLoader;
 
+// Icons
 import Icons from "../icons/index.vue";
+
+// Avatar library
 import md5 from "js-md5";
+
+// Date formatting library
 import { format } from "timeago.js";
 
+// Reply list component
 import ReplyModal from "../modal/index.vue";
 
+// Comment area component
 import CommentsArea from "../sections/CommentsArea.vue";
 
 interface stateType {
@@ -206,6 +216,7 @@ interface stateType {
   modalVisibility: any;
 }
 
+// i18n
 import getLang from "../../configs/languages";
 
 export default defineComponent({
