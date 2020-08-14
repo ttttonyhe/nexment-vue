@@ -46,8 +46,8 @@ Nexment is available for both React.js and Vue.js projects.
 <br/>
 
 ### Part II - Nexment
-Add Nexment to your project
-dependencies using Yarn:
+Add Nexment to your project dependencies
+using Yarn:
 ```shell
 yarn add nexment-vue
 ```
@@ -86,6 +86,57 @@ Use the nexment component:
 ```
 
 <br/>
+
+## Use Nexment-Vue in Nuxt.js
+Add Nexment to your project dependencies
+using Yarn:
+```shell
+yarn add nexment-vue
+```
+or using NPM:
+```shell
+npm install nexment-vue
+```
+
+Create a plugin(src/plugins/nexment.js):
+```js
+import Vue from 'vue'
+import NexmentContainer from 'nexment-vue'
+import 'nexment-vue/dist/nexment-vue.css'
+Vue.use(NexmentContainer)
+```
+
+Add this plugin to your Nuxt.js configuration(nuxt.config.js):
+```js
+module.exports = {
+  plugins: [{
+      src: '@/plugins/nexment.ts',
+      ssr: false,
+      mode: 'client'
+    }]
+}
+```
+
+Setup nexment configuration:
+```js
+const config = {
+  pageKey: 'xxx' | undefined;
+  enableLinkInput: true | undefined,
+  leancloud: {
+    appId: 'xxx',
+    appKey: 'xxx',
+    serverURL: 'https://xxx.xxx',
+  },
+  admin: {
+    name: 'xxx',
+    email: 'xxx@xxx.xxx',
+  },
+};
+```
+Use the nexment component:
+```Vue
+<NexmentContainer :config="config" />
+```
 
 ## Todo
 1. 管理模式
