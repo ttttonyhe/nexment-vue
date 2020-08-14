@@ -16,6 +16,21 @@ import CommentsList from "../sections/CommentsList.vue";
 import VueCompositionAPI from "@vue/composition-api";
 Vue.use(VueCompositionAPI);
 
+// Tooltip
+import VTooltip from "v-tooltip";
+Vue.use(VTooltip);
+
+// Markdown
+import VueShowdown from "vue-showdown";
+import { markDownConfigs } from "../../configs/index";
+Vue.use(VueShowdown, {
+  options: markDownConfigs,
+});
+
+// Modal
+import VModal from "vue-js-modal";
+Vue.use(VModal);
+
 // Identifier generator
 import getIdentifier from "../../lib/utils/getIdentifier";
 

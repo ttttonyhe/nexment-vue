@@ -50,6 +50,8 @@
     height: fit-content !important;
   }
   .nexment-modal-text {
+    text-align: center;
+    margin-bottom: 20px;
     h1 {
       margin: 0px;
       letter-spacing: 0.3px;
@@ -63,10 +65,9 @@
   }
   input {
     width: 50%;
-    height: 30px;
+    margin-left: calc((50% - 80px)/2);
     border-radius: 3px 0px 0px 3px;
     padding: 0px 10px;
-    margin: 10px 0px;
     border: 1px solid #cfd1d2;
     font-size: 14px;
     color: #687a86;

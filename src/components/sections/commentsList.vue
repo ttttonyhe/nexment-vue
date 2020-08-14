@@ -193,12 +193,6 @@ const ContentLoader = require("vue-content-loader").ContentLoader;
 import Icons from "../icons/index.vue";
 import md5 from "js-md5";
 import { format } from "timeago.js";
-import Vue from "vue";
-import VueShowdown from "vue-showdown";
-import { markDownConfigs } from "../../configs/index";
-Vue.use(VueShowdown, {
-  options: markDownConfigs,
-});
 
 import ReplyModal from "../modal/index.vue";
 

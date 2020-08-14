@@ -3,7 +3,7 @@
     :value="value"
     placeholder="键入一些内容吧..."
     @input="handleChange"
-    id="nexmentTextArea"
+    :id="'nexmentTextArea' + ID"
   ></textarea>
 </template>
 
@@ -13,7 +13,7 @@ import autosize from "autosize";
 
 export default defineComponent({
   name: "AutosizeTextarea",
-  props: ["value"],
+  props: ["value", "ID"],
   mounted() {
     autosize(this.$el);
   },

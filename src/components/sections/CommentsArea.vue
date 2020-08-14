@@ -12,6 +12,7 @@
     <div class="nexment-comment-area-middle">
       <autosize-textarea
         v-model="commentContent"
+        :ID="commentAreaID"
         ref="textarea"
         :class="previewStatus ? 'nexment-previewing' : ''"
       />
@@ -95,6 +96,7 @@
           <Icons name="email" v-if="commentEwr" />
           <Icons name="emailFill" v-else />
         </button>
+
         <button v-tooltip="'头像'">
           <a
             href="https://cn.gravatar.com/support/what-is-gravatar"
@@ -103,6 +105,7 @@
             <Icons name="avatar" />
           </a>
         </button>
+
         <button
           @click="togglePreview"
           v-tooltip="previewStatus ? '关闭预览' : '预览'"
@@ -110,13 +113,26 @@
           <Icons name="markdownFill" v-if="previewStatus" />
           <Icons name="markdown" v-else />
         </button>
+
+        <button
+          v-if="AV.User.current()"
+          @click="toggleLogout"
+          v-tooltip="'退出登录'"
+        >
+          <Icons name="logout" />
+        </button>
       </div>
       <div>
         <button @click="sendComment()">
-          发送评论{{ resetStatus ? primaryReplyToName : replyToName }}
+          发送评论
         </button>
       </div>
     </div>
+    <verification
+      v-if="verificationCardStatus"
+      :config="config"
+      @closeFunc="toggleVerification"
+    />
   </div>
 </template>
 
@@ -130,19 +146,19 @@ import "github-markdown-css";
 import AutosizeTextarea from "../controls/textarea.vue";
 import EmojiCard from "../controls/emojiCard/index.vue";
 import TagCard from "../controls/tagCard/index.vue";
-
-import VTooltip from "v-tooltip";
-Vue.use(VTooltip);
+import leanCloud from "../../lib/database/initiation";
 
 import insertTextAtCursor from "insert-text-at-cursor";
 
 import usingSaveComment from "../../lib/database/saveComment";
 import generateCommentID from "../../lib/utils/generateCommentID";
 
+import Verification from "../modal/verification.vue";
+
 // Local storage
 import Storage from "vue-ls";
 const options = {
-  namespace: "vuejs__", // key prefix
+  namespace: "nexment__", // key prefix
   name: "ls", // name variable Vue.[ls] or this.[$ls],
   storage: "local", // storage name session, local, memory
 };
@@ -166,6 +182,7 @@ export default defineComponent({
     Icons,
     EmojiCard,
     TagCard,
+    Verification,
   },
   data() {
     return {
@@ -180,6 +197,13 @@ export default defineComponent({
       commentName: "",
       commentLink: "",
       commentEmail: "",
+      commentAreaID: Math.random(),
+      AV: leanCloud(
+        this.config.leancloud.appId,
+        this.config.leancloud.appKey,
+        this.config.leancloud.serverURL
+      ),
+      verificationCardStatus: false,
     } as {
       modalStatus: boolean;
       previewStatus: boolean;
@@ -192,15 +216,15 @@ export default defineComponent({
       commentName: string;
       commentLink: string;
       commentEmail: string;
+      commentAreaID: number;
+      AV: any;
+      verificationCardStatus: boolean;
     };
   },
   mounted() {
     const lsData = this.$ls.get("nexment-commenterInfo");
     if (lsData) {
       ["tag", "name", "email", "link"].map((item) => {
-        console.log(
-          "comment" + item.substring(0, 1).toUpperCase() + item.substring(1)
-        );
         if (lsData[item]) {
           this[
             "comment" + item.substring(0, 1).toUpperCase() + item.substring(1)
@@ -248,7 +272,9 @@ export default defineComponent({
       this.tagPopoverVisibility = !this.tagPopoverVisibility;
     },
     insertEmoji(content: string) {
-      const el = document.getElementById("nexmentTextArea");
+      const el = document.getElementById(
+        "nexmentTextArea" + this.commentAreaID
+      );
       if (el) {
         let insert: any = insertTextAtCursor;
         insert(el, content);
@@ -290,7 +316,9 @@ export default defineComponent({
       // Finish loading
       this.toggleLoading();
       if (returnData.status === 500) {
-        alert("Comment sending error");
+        alert("评论发送失败");
+      } else if (returnData.status === 501) {
+        this.toggleVerification();
       } else {
         // Comment success
         // Store commenter info
@@ -321,8 +349,25 @@ export default defineComponent({
     }) {
       this.$ls.set("nexment-commenterInfo", info);
     },
+    toggleLogout() {
+      this.AV.User.logOut();
+      window.location.reload();
+    },
+    toggleVerification() {
+      this.verificationCardStatus = !this.verificationCardStatus;
+    },
   },
   watch: {
+    commentEmail: function(email) {
+      if (email === this.config.admin.email && !this.AV.User.current()) {
+        this.toggleVerification();
+      }
+    },
+    commentName: function(name) {
+      if (name === this.config.admin.name && !this.AV.User.current()) {
+        this.toggleVerification();
+      }
+    },
     replyToName: function(name) {
       if (name) {
         this.resetStatus = false;

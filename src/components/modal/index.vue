@@ -28,10 +28,7 @@
 </template>
 <script lang="ts">
 import "../../assets/style/modal.scss";
-import Vue from "vue";
 import { defineComponent } from "@vue/composition-api";
-import VModal from "vue-js-modal";
-Vue.use(VModal);
 import RepliesList from "../sections/RepliesList.vue";
 import Icons from "../icons/index.vue";
 

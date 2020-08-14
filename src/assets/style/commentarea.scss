@@ -81,10 +81,8 @@
   }
   input {
     width: 58%;
-    height: 30px;
     border-radius: 3px 0px 0px 3px;
     padding: 0px 10px;
-    margin: 10px 0px;
     border: 1px solid #cfd1d2;
     font-size: 14px;
     color: #687a86;
@@ -109,7 +107,9 @@
   }
   .nexment-popover-input {
     margin-left: 8.5%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    margin-top: 10px;
   }
 }
 
@@ -351,4 +351,13 @@ $borderColor: #e8e8e8;
 
 .nexment-popover-tooltip {
   margin-bottom: 10px !important;
+}
+
+.nexment-verification-modal {
+  height: fit-content !important;
+}
+
+.nexment-modal-input-group {
+  margin: 10px 0px;
+  display: flex;
 }

@@ -159,15 +159,6 @@ const ContentLoader = require("vue-content-loader").ContentLoader;
 import Icons from "../icons/index.vue";
 const md5 = require("js-md5");
 import { format } from "timeago.js";
-import Vue from "vue";
-import VueShowdown from "vue-showdown";
-import { markDownConfigs } from "../../configs/index";
-Vue.use(VueShowdown, {
-  options: markDownConfigs,
-});
-
-import VModal from "vue-js-modal";
-Vue.use(VModal);
 
 import CommentsArea from "../sections/CommentsArea.vue";
 
@@ -199,7 +190,6 @@ export default defineComponent({
     };
   },
   setup(props: any) {
-    console.log(props);
     const { data, error } = useSWRV(
       props.config.pageKey,
       listFetcher(props.config)
@@ -222,7 +212,6 @@ export default defineComponent({
     },
     handleReplyClickReply(item: any) {
       if (item.hasReplies) {
-        console.log("fuck");
         this.$set(this.modalVisibility, item.OID, true);
         // 数据渲染延迟处理
         setTimeout(() => {

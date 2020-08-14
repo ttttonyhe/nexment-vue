@@ -1,91 +1,67 @@
-import React from 'react';
-import Rodal from 'rodal';
-import 'rodal/lib/rodal.css';
-import '../../assets/style/modal.scss';
-import { nexmentConfigType } from 'components/container';
-import adminLogin from '../../lib/database/adminLoging';
-import translate from '../../lib/translation/index';
-import Context from "../../lib/utils/configContext";
-
-const VerificationModal = (Props: {
-  visibilityFunction?: Function;
-  config: nexmentConfigType;
-}) => {
-  // Configs
-  const NexmentConfigs:nexmentConfigType = React.useContext(Context);
-
-  // Translation
-  const Translation = translate.use().text;
-
-  // Modal state
-  const [notificationModalStatus, setNotificationModalStatus] = React.useState<
-    boolean
-  >(true);
-
-  // Admin state
-  const [password, setPassword] = React.useState<string>();
-  const [loginText, setLoginText] = React.useState<string>('Login');
-
-  // Modal closing event handler
-  const handleCloseNotification = () => {
-    setNotificationModalStatus(!notificationModalStatus);
-    if (Props.visibilityFunction) {
-      // Change visibility state in CommentsList
-      Props.visibilityFunction(false);
-    }
-  };
-
-  // Admin event handler
-  const handlePwdChange = (e: {
-    target: { value: React.SetStateAction<string | undefined> };
-  }) => {
-    setPassword(e.target.value);
-  };
-
-  /**
-   * Login event handler
-   *
-   */
-  const loginAction = async () => {
-    setLoginText('Verifying...');
-    const returnData = await adminLogin(
-      NexmentConfigs.admin.name,
-      NexmentConfigs.admin.email,
-      password || '',
-      NexmentConfigs
-    );
-    if (returnData.status !== 200) {
-      alert(returnData.msg);
-      setLoginText('Login');
-    } else {
-      setLoginText('Success');
-      handleCloseNotification();
-    }
-  };
-
-  return (
-    <Rodal
-      visible={notificationModalStatus}
-      onClose={() => {
-        handleCloseNotification();
-      }}
-      className="nexment-modal-notification"
-      animation="fade"
-    >
-      <div className="nexment-modal-text">
-        <h1>{Translation.verification}</h1>
-        <p>{Translation.verifyDes}</p>
+<template>
+  <modal
+    name="verifyCard"
+    :adaptive="true"
+    @closed="modalCloseHandler"
+    classes="nexment-verification-modal"
+  >
+    <div class="nexment-modal-notification">
+      <div>
+        <div class="nexment-modal-text">
+          <h1>管理员验证</h1>
+          <p>请验证管理员密码 (首次密码输入将自动注册为管理员密码)</p>
+        </div>
+        <div class="nexment-modal-input-group">
+          <input placeholder="管理员密码" v-model="password" />
+          <button @click="loginAction">{{ loginText }}</button>
+        </div>
       </div>
-      <input placeholder="Admin password" onChange={handlePwdChange}></input>
-      <button
-        onClick={() => {
-          loginAction();
-        }}
-      >
-        {loginText}
-      </button>
-    </Rodal>
-  );
-};
+    </div>
+  </modal>
+</template>
 
-export default VerificationModal;
+<script lang="ts">
+import { defineComponent } from "@vue/composition-api";
+import adminLogin from "../../lib/database/adminLoging";
+export default defineComponent({
+  name: "Verification",
+  props: ["config"],
+  data() {
+    return {
+      loginText: "登录",
+      password: null,
+    };
+  },
+  mounted() {
+    this.$modal.show("verifyCard");
+  },
+  methods: {
+    closeModal() {
+      this.$modal.hide("verifyCard");
+    },
+    modalCloseHandler() {
+      this.$emit("closeFunc");
+    },
+    async loginAction() {
+      this.loginText = "验证中...";
+      const returnData = await adminLogin(
+        this.config.admin.name,
+        this.config.admin.email,
+        this.password || "",
+        this.config
+      );
+      if (returnData.status !== 200) {
+        alert(returnData.msg);
+        this.loginText = "登录";
+      } else {
+        this.loginText = "验证成功";
+        this.handleCloseNotification();
+      }
+    },
+    handleCloseNotification() {
+      this.closeModal();
+      this.modalCloseHandler();
+    },
+  },
+});
+</script>
