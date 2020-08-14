@@ -1,7 +1,7 @@
 <template>
   <textarea
     :value="value"
-    placeholder="键入一些内容吧..."
+    :placeholder="getLang('placeHolder')"
     @input="handleChange"
     :id="'nexmentTextArea' + ID"
   ></textarea>
@@ -11,9 +11,17 @@
 import { defineComponent } from "@vue/composition-api";
 import autosize from "autosize";
 
+// i18n
+import getLang from "../../configs/languages";
+
 export default defineComponent({
   name: "AutosizeTextarea",
   props: ["value", "ID"],
+  setup() {
+    return {
+      getLang,
+    };
+  },
   mounted() {
     autosize(this.$el);
   },

@@ -8,11 +8,11 @@
     <div class="nexment-modal-notification">
       <div>
         <div class="nexment-modal-text">
-          <h1>管理员验证</h1>
-          <p>请验证管理员密码 (首次密码输入将自动注册为管理员密码)</p>
+          <h1>{{ getLang("verification") }}</h1>
+          <p>{{ getLang("verifyDes") }}</p>
         </div>
         <div class="nexment-modal-input-group">
-          <input placeholder="管理员密码" v-model="password" />
+          <input :placeholder="getLang('verifyPwd')" v-model="password" />
           <button @click="loginAction">{{ loginText }}</button>
         </div>
       </div>
@@ -23,6 +23,10 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import adminLogin from "../../lib/database/adminLoging";
+
+// i18n
+import getLang from "../../configs/languages";
+
 export default defineComponent({
   name: "Verification",
   props: ["config"],
@@ -30,6 +34,11 @@ export default defineComponent({
     return {
       loginText: "登录",
       password: null,
+    };
+  },
+  setup() {
+    return {
+      getLang,
     };
   },
   mounted() {

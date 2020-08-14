@@ -3,20 +3,19 @@
     <div v-if="error">
       <div class="nexment-empty">
         <div><Icons name="commentsError" /></div>
-        <p>Nexment 服务错误</p>
+        <p>{{ getLang("serviceError") }}</p>
         <div class="nexment-error">
-          <p>错误诊断</p>
+          <p>{{ getLang("problemShooting") }}</p>
           <p>
-            请确认你已经在 LeanCloud 添加了一个名为 [nexment_comments] 的
-            Class&nbsp;|&nbsp;
+            {{ getLang("problemDes") }}&nbsp;|&nbsp;
             <a href="https://nexment.ouorz.com" target="_blank">
-              参考文档
+              {{ getLang("documentation") }}
             </a>
           </p>
         </div>
       </div>
     </div>
-    <div v-if="!data">
+    <div v-else-if="!data">
       <div class="nexment-loading">
         <ContentLoader :speed="2" :width="700">
           <rect x="52" y="8" rx="3" ry="3" width="100%" height="10" />
@@ -45,11 +44,11 @@
       />
       <div class="nexment-header">
         <div>
-          <h1>{{ data.length }} 条评论</h1>
+          <h1>{{ data.length }} {{ getLang("comments") }}</h1>
         </div>
         <div>
           <p>
-            驱动来自
+            {{ getLang("poweredBy") }}
             <a
               href="https://github.com/HelipengTony/nexment-vue"
               target="_blank"
@@ -138,7 +137,11 @@
                           class="nexment-comments-replyto"
                         >
                           <span> · </span>
-                          {{ replyItem.replyList.length }} 条回复
+                          {{ replyItem.replyList.length }}&nbsp;{{
+                            replyItem.replyList.length > 1
+                              ? getLang("replies")
+                              : getLang("reply")
+                          }}
                           <Icons name="down" />
                         </b>
                         <em class="nexment-reply-icon-reply">
@@ -172,7 +175,7 @@
         </li>
         <div v-if="!data.length" class="nexment-empty">
           <div><Icons name="comments" /></div>
-          <p>暂无评论</p>
+          <p>{{ getLang('noComments') }}</p>
         </div>
       </ul>
     </div>
@@ -203,6 +206,8 @@ interface stateType {
   modalVisibility: any;
 }
 
+import getLang from "../../configs/languages";
+
 export default defineComponent({
   name: "CommentsList",
   props: ["config"],
@@ -221,6 +226,7 @@ export default defineComponent({
       data,
       error,
       mutate,
+      getLang,
     };
   },
   data() {

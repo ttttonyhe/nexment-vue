@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CommentsList :config="configs" />
+    <CommentsList v-if="ready" :config="configs" />
   </div>
 </template>
 
@@ -43,10 +43,12 @@ export default class NexmentContainer extends Vue {
   // Get config props
   @Prop() public config!: nexmentConfigType;
   configs: nexmentConfigType = this.$props.config;
+  ready:boolean = false;
   mounted() {
     if (this.$props.config.pageKey === undefined) {
       this.$set(this.configs, "pageKey", getIdentifier().identifierData);
     }
+    this.ready = true;
   }
 }
 </script>

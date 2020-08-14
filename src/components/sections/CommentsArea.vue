@@ -1,10 +1,10 @@
 <template>
   <div class="nexment-comment-area" id="nexment-comment-area">
     <div class="nexment-comment-area-top">
-      <input placeholder="昵称" v-model="commentName" />
-      <input placeholder="邮箱" v-model="commentEmail" />
+      <input :placeholder="getLang('name')" v-model="commentName" />
+      <input :placeholder="getLang('email')" v-model="commentEmail" />
       <input
-        placeholder="站点链接"
+        :placeholder="getLang('link')"
         v-model="commentLink"
         v-if="config.enableLinkInput"
       />
@@ -18,7 +18,7 @@
       />
       <div class="nexment-md-preview markdown-body" v-if="previewStatus">
         <VueShowdown
-          :markdown="commentContent ? commentContent : '无内容可预览'"
+          :markdown="commentContent ? commentContent : getLang('nothing')"
         />
       </div>
     </div>
@@ -26,7 +26,7 @@
       <div>
         <button
           :class="getReplyDisplay()"
-          v-tooltip="'重置回复'"
+          v-tooltip="getLang('resetReply')"
           @click="setResetStatus"
         >
           <Icons
@@ -73,12 +73,13 @@
           <button
             style="padding: 0px;"
             v-tooltip="{
-              content: '描述标签',
+              content: getLang('desTag'),
               classes: 'nexment-popover-tooltip',
             }"
             @click="toggleTagCard"
           >
-            <Icons name="tag" />
+            <Icons v-if="commentTag" name="tagFill" />
+            <Icons v-else name="tag" />
           </button>
           <template slot="popover">
             <tag-card
@@ -91,13 +92,13 @@
 
         <button
           @click="setCommentEwr"
-          v-tooltip="commentEwr ? '取消订阅' : '订阅回复'"
+          v-tooltip="commentEwr ? getLang('unSub') : getLang('sub')"
         >
           <Icons name="email" v-if="commentEwr" />
           <Icons name="emailFill" v-else />
         </button>
 
-        <button v-tooltip="'头像'">
+        <button v-tooltip="getLang('avatar')">
           <a
             href="https://cn.gravatar.com/support/what-is-gravatar"
             target="_blank"
@@ -108,7 +109,9 @@
 
         <button
           @click="togglePreview"
-          v-tooltip="previewStatus ? '关闭预览' : '预览'"
+          v-tooltip="
+            previewStatus ? getLang('stopPreview') : getLang('mdPreview')
+          "
         >
           <Icons name="markdownFill" v-if="previewStatus" />
           <Icons name="markdown" v-else />
@@ -117,14 +120,14 @@
         <button
           v-if="AV.User.current()"
           @click="toggleLogout"
-          v-tooltip="'退出登录'"
+          v-tooltip="getLang('adminLogout')"
         >
           <Icons name="logout" />
         </button>
       </div>
       <div>
         <button @click="sendComment()">
-          发送评论
+          {{ getLang("submit") }}
         </button>
       </div>
     </div>
@@ -163,6 +166,9 @@ const options = {
   storage: "local", // storage name session, local, memory
 };
 Vue.use(Storage, options);
+
+// i18n
+import getLang from "../../configs/languages";
 
 export default defineComponent({
   name: "CommentsArea",
@@ -204,6 +210,7 @@ export default defineComponent({
         this.config.leancloud.serverURL
       ),
       verificationCardStatus: false,
+      getLang: () => {},
     } as {
       modalStatus: boolean;
       previewStatus: boolean;
@@ -219,12 +226,13 @@ export default defineComponent({
       commentAreaID: number;
       AV: any;
       verificationCardStatus: boolean;
+      getLang: Function;
     };
   },
   mounted() {
     const lsData = this.$ls.get("nexment-commenterInfo");
     if (lsData) {
-      ["tag", "name", "email", "link"].map((item) => {
+      ["tag", "name", "email", "link", "ewr"].map((item) => {
         if (lsData[item]) {
           this[
             "comment" + item.substring(0, 1).toUpperCase() + item.substring(1)
@@ -232,6 +240,7 @@ export default defineComponent({
         }
       });
     }
+    this.getLang = getLang;
   },
   methods: {
     togglePreview() {
@@ -327,6 +336,7 @@ export default defineComponent({
           email: this.commentEmail,
           tag: this.commentTag,
           link: this.commentLink,
+          ewr: this.commentEwr,
         });
         // Set content to empty
         const ref: any = this.$refs.textarea;
@@ -346,6 +356,7 @@ export default defineComponent({
       email: string;
       tag: string;
       link?: string;
+      ewr?: boolean;
     }) {
       this.$ls.set("nexment-commenterInfo", info);
     },

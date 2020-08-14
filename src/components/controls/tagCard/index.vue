@@ -1,9 +1,9 @@
 <template>
   <div class="nexment-popover">
     <div class="nexment-popover-text">
-      <b>描述标签</b>
+      <b>{{ getLang("desTag") }}</b>
     </div>
-    <p>使用描述标签让观众了解你的专业、知识和身份背景</p>
+    <p>{{ getLang("desTagDes") }}</p>
     <div class="nexment-popover-input">
       <input
         :placeholder="tag ? tag : '描述标签'"
@@ -11,7 +11,7 @@
         @change="changeTag"
       />
       <button class="nexment-tag-button" @click="closeCard()">
-        确认
+        {{ getLang("confirm") }}
       </button>
     </div>
   </div>
@@ -19,9 +19,18 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
+
+// i18n
+import getLang from "../../../configs/languages";
+
 export default defineComponent({
   name: "TagCard",
   props: ["tag"],
+  setup() {
+    return {
+      getLang,
+    };
+  },
   data() {
     return {
       tagNow: "",

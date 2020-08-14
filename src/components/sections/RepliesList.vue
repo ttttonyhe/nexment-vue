@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="nexment-modal-text">
-      <h1>回复列表</h1>
+      <h1>{{ getLang("replyList") }}</h1>
       <p>@{{ replyToName }}</p>
     </div>
     <div class="nexment-reply-container">
@@ -93,7 +93,11 @@
                           class="nexment-comments-replyto"
                         >
                           <span> · </span>
-                          {{ item.replyList.length }} 条回复
+                          {{ item.replyList.length }}&nbsp;{{
+                            item.replyList.length > 1
+                              ? getLang("replies")
+                              : getLang("reply")
+                          }}
                           <Icons name="down" />
                         </b>
                       </h5>
@@ -135,7 +139,7 @@
               </div>
               <div v-if="!dataContent.length" class="nexment-empty">
                 <div><Icons name="comments" /></div>
-                <p>暂无评论</p>
+                <p>{{ getLang('noComments') }}</p>
               </div>
             </ul>
           </div>
@@ -161,6 +165,9 @@ const md5 = require("js-md5");
 import { format } from "timeago.js";
 
 import CommentsArea from "../sections/CommentsArea.vue";
+
+// i18n
+import getLang from "../../configs/languages";
 
 export default defineComponent({
   name: "RepliesList",
@@ -197,6 +204,7 @@ export default defineComponent({
     return {
       data,
       error,
+      getLang,
     };
   },
   methods: {
@@ -251,9 +259,9 @@ export default defineComponent({
       this.nowReplyToOID = "";
       this.nowReplyToName = "";
     },
-    refetchData(){
+    refetchData() {
       this.$emit("refetchFunc");
-    }
+    },
   },
 });
 </script>
