@@ -27,6 +27,6 @@ jobs:
           CI: true
 
       - name: Build
-        run: yarn build
+        run: yarn run build-lib
         env:
           CI: true
