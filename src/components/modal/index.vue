@@ -30,10 +30,10 @@
 /** 
   Reply list modal
 */
-import "../../assets/style/modal.scss";
+import "@/assets/style/modal.scss";
 import { defineComponent } from "@vue/composition-api";
-import RepliesList from "../sections/RepliesList.vue";
-import Icons from "../icons/index.vue";
+import RepliesList from "@/components/sections/RepliesList.vue";
+import Icons from "@/components/icons/index.vue";
 
 export default defineComponent({
   name: "ReplyModal",

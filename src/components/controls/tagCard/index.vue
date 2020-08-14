@@ -24,7 +24,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 // i18n
-import getLang from "../../../configs/languages";
+import getLang from "@/configs/languages";
 
 export default defineComponent({
   name: "TagCard",

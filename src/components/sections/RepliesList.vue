@@ -152,19 +152,19 @@
 /** 
   Reply list
 */
-import "../../assets/style/commentslist.scss";
+import "@/assets/style/commentslist.scss";
 // NOTE: Replace with 'vue' when migrating to Vue 3
 import { defineComponent, reactive } from "@vue/composition-api";
 
 // SWRV feature (Composition API required)
 import useSWRV from "swrv";
-import listFetcher from "../../lib/database/getCommentsList";
+import listFetcher from "@/lib/database/getCommentsList";
 
 // Using require to avoid type error
 const ContentLoader = require("vue-content-loader").ContentLoader;
 
 // Icons
-import Icons from "../icons/index.vue";
+import Icons from "@/components/icons/index.vue";
 
 // Avatar library
 const md5 = require("js-md5");
@@ -173,10 +173,10 @@ const md5 = require("js-md5");
 import { format } from "timeago.js";
 
 // Comment area component
-import CommentsArea from "../sections/CommentsArea.vue";
+import CommentsArea from "@/components/sections/CommentsArea.vue";
 
 // i18n
-import getLang from "../../configs/languages";
+import getLang from "@/configs/languages";
 
 export default defineComponent({
   name: "RepliesList",

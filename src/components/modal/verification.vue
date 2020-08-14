@@ -25,10 +25,10 @@
   Admin verification modal
 */
 import { defineComponent } from "@vue/composition-api";
-import adminLogin from "../../lib/database/adminLoging";
+import adminLogin from "@/lib/database/adminLoging";
 
 // i18n
-import getLang from "../../configs/languages";
+import getLang from "@/configs/languages";
 
 export default defineComponent({
   name: "Verification",

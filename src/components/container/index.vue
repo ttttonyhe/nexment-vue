@@ -8,7 +8,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 // Comments list component
-import CommentsList from "../sections/CommentsList.vue";
+import CommentsList from "@/components/sections/CommentsList.vue";
 
 // Composition API
 import VueCompositionAPI from "@vue/composition-api";
@@ -20,7 +20,7 @@ Vue.use(VTooltip);
 
 // Markdown library
 import VueShowdown from "vue-showdown";
-import { markDownConfigs } from "../../configs/index";
+import { markDownConfigs } from "@/configs/index";
 Vue.use(VueShowdown, {
   options: markDownConfigs,
 });
@@ -30,7 +30,7 @@ import VModal from "vue-js-modal";
 Vue.use(VModal);
 
 // Identifier generator
-import getIdentifier from "../../lib/utils/getIdentifier";
+import getIdentifier from "@/lib/utils/getIdentifier";
 
 @Component({
   components: {

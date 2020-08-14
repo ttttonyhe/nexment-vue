@@ -150,33 +150,33 @@ import { defineComponent } from "@vue/composition-api";
 import autosize from "autosize";
 
 // Icons
-import Icons from "../icons/index.vue";
+import Icons from "@/components/icons/index.vue";
 
 // Global stylesheet
-import "../../assets/style/commentarea.scss";
+import "@/assets/style/commentarea.scss";
 
 // Github markdown stylesheet
 import "github-markdown-css";
 
 // Auto-resize textarea component
-import AutosizeTextarea from "../controls/textarea.vue";
+import AutosizeTextarea from "@/components/controls/textarea.vue";
 
 // Features component
-import EmojiCard from "../controls/emojiCard/index.vue";
-import TagCard from "../controls/tagCard/index.vue";
+import EmojiCard from "@/components/controls/emojiCard/index.vue";
+import TagCard from "@/components/controls/tagCard/index.vue";
 
 // User login status library
-import leanCloud from "../../lib/database/initiation";
+import leanCloud from "@/lib/database/initiation";
 
 // Emoji inserting library
 import insertTextAtCursor from "insert-text-at-cursor";
 
 // Database library
-import usingSaveComment from "../../lib/database/saveComment";
-import generateCommentID from "../../lib/utils/generateCommentID";
+import usingSaveComment from "@/lib/database/saveComment";
+import generateCommentID from "@/lib/utils/generateCommentID";
 
 // Admin verification modal
-import Verification from "../modal/verification.vue";
+import Verification from "@/components/modal/verification.vue";
 
 // Local storage library
 import Storage from "vue-ls";
@@ -188,7 +188,7 @@ const options = {
 Vue.use(Storage, options);
 
 // i18n
-import getLang from "../../configs/languages";
+import getLang from "@/configs/languages";
 
 export default defineComponent({
   name: "CommentsArea",

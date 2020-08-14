@@ -15,7 +15,7 @@ import { defineComponent } from "@vue/composition-api";
 import autosize from "autosize";
 
 // i18n
-import getLang from "../../configs/languages";
+import getLang from "@/configs/languages";
 
 export default defineComponent({
   name: "AutosizeTextarea",
