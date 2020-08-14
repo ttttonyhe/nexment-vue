@@ -1,10 +1,7 @@
 {
   "name": "nexment-vue",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "build-lib": "vue-cli-service build --target lib --name nexment-vue src/main.ts --inline-vue"
   },
   "main": "./dist/nexment-vue.common.js",
