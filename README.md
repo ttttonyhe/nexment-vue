@@ -138,6 +138,16 @@ Use the nexment component:
 <NexmentContainer :config="config" />
 ```
 
+<br/>
+
+## TypeScript Support
+Currently type-checking is not supported, please add the following declaration to any .d.ts file in your project:
+```ts
+declare module 'nexment-vue'
+```
+
+<br/>
+
 ## Todo
 1. 管理模式
     1. [ ] 评论精选
