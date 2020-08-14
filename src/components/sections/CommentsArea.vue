@@ -140,7 +140,7 @@
 </template>
 
 <script lang="ts">
-/** 
+/**
   Comment Area
 */
 import Vue from "vue";
@@ -250,7 +250,11 @@ export default defineComponent({
     };
   },
   mounted() {
-    const lsData = this.$ls.get("nexment-commenterInfo");
+    try {
+      var lsData = this.$ls.get("nexment-commenterInfo");
+    } catch (e) {
+      var lsData = undefined;
+    }
     if (lsData) {
       ["tag", "name", "email", "link", "ewr"].map((item) => {
         if (lsData[item]) {
@@ -378,7 +382,9 @@ export default defineComponent({
       link?: string;
       ewr?: boolean;
     }) {
-      this.$ls.set("nexment-commenterInfo", info);
+      try {
+        this.$ls.set("nexment-commenterInfo", info);
+      } catch (e) {}
     },
     toggleLogout() {
       this.AV.User.logOut();
