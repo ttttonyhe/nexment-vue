@@ -15,6 +15,12 @@ Another lovely serverless comments library for Vue based on LeanCloud
 
 <br/>
 
+## See also
++ Nexment for Vue.js [https://github.com/HelipengTony/nexment-vue](https://github.com/HelipengTony/nexment-vue)
++ Nexment for React.js [https://github.com/HelipengTony/nexment](https://github.com/HelipengTony/nexment)
+
+<br/>
+
 ## Docs
 Visit Nexment documentation site at [https://nexment.ouorz.com](https://nexment.ouorz.com)
 
