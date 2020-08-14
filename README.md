@@ -76,7 +76,7 @@ const config = {
 ```
 Use the nexment component:
 ```Vue
-<NexmentContainer :config="configs" />
+<NexmentContainer :config="config" />
 ```
 
 <br/>
