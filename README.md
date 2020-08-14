@@ -2,10 +2,6 @@
 Another lovely serverless comments library for Vue based on LeanCloud
 
 <p>
-  <a href="https://github.com/HelipengTony/nexment-vue/actions?query=workflow%3ACI">
-    <img src="https://github.com/HelipengTony/nexment-vue/workflows/CI/badge.svg" alt="github ci">
-  </a>
-
   <a href="https://www.npmjs.com/package/nexment-vue">
     <img src="https://img.shields.io/npm/dw/nexment-vue" alt="npm downloads">
   </a>
