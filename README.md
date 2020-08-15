@@ -140,6 +140,36 @@ Use the nexment component:
 
 <br/>
 
+## Use Nexment in Browsers
+Nexment can be used as a web component in browsers. That means it can work without a Vue.js instance. Follow the following steps to set it up:
+
+Add Nexment stylesheet to your <head> through CDN:
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nexment-vue/dist/nexment-vue.css">
+```
+
+Add Nexment main file through CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/nexment-vue/dist-wc/nexment-vue.min.js"></script>
+```
+
+Use Nexment component in your page(`pagekey` is optional):
+```html
+<nexment-container
+  email="xxx"
+  name="xxx"
+  serverurl="xxx"
+  appkey="xxx"
+  appid="xxx"
+  pagekey="xxx"
+  enablelinkinput="xxx"
+></nexment-container>
+```
+
+See Nexment web component demo here: [https://github.com/HelipengTony/nexment-vue/blob/master/index.html](https://github.com/HelipengTony/nexment-vue/blob/master/index.html)
+
+<br/>
+
 ## TypeScript Support
 Currently type-checking is not supported, please add the following declaration to any .d.ts file in your project:
 ```ts

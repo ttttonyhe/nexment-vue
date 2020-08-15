@@ -309,7 +309,7 @@ $borderColor: #e8e8e8;
   overflow-y: scroll !important;
   box-shadow: 0px 2px 8px rgba(213, 222, 231, 0.3);
   @media screen and (min-width: 1000px) {
-    height: 90vh !important;
+    height: 90vh;
     transform: none !important;
     width: 75vh !important;
     left: calc((100% - 75vh) / 2) !important;

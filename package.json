@@ -3,19 +3,14 @@
   "license": "MIT",
   "version": "0.0.14",
   "scripts": {
-    "build-lib": "vue-cli-service build --target lib --name nexment-vue src/main.ts --inline-vue"
+    "build-lib": "vue-cli-service build --target lib --name nexment-vue src/main.ts --inline-vue",
+    "build-wc": "vue-cli-service build --target wc --name nexment-vue src/component.ts --dest dist-wc --inline-vue"
   },
   "main": "./dist/nexment-vue.common.js",
   "dependencies": {
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "vue-class-component": "^7.2.3",
-    "vue-content-loader": "^0.2.3",
-    "vue-js-modal": "^2.0.0-rc.6",
-    "vue-ls": "^3.2.1",
-    "vue-property-decorator": "^8.4.2",
-    "vue-showdown": "^2.4.1",
     "@types/autosize": "^3.0.7",
     "@types/insert-text-at-cursor": "^0.3.0",
     "@types/js-md5": "^0.4.2",
@@ -24,10 +19,7 @@
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/composition-api": "^1.0.0-beta.8",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2",
-    "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11",
+    "@vue/web-component-wrapper": "^1.2.0",
     "autosize": "^4.0.2",
     "core-js": "^3.6.5",
     "github-markdown-css": "^4.0.0",
@@ -35,10 +27,20 @@
     "js-md5": "^0.7.3",
     "leancloud-storage": "^4.6.1",
     "markdown-it": "^11.0.0",
+    "node-sass": "^4.12.0",
     "qs": "^6.9.4",
+    "sass-loader": "^8.0.2",
     "swrv": "^0.7.2",
     "timeago.js": "^4.0.2",
+    "typescript": "~3.9.3",
     "unfetch": "^4.1.0",
-    "v-tooltip": "^2.0.3"
+    "v-tooltip": "^2.0.3",
+    "vue-class-component": "^7.2.3",
+    "vue-content-loader": "^0.2.3",
+    "vue-js-modal": "^2.0.0-rc.6",
+    "vue-ls": "^3.2.1",
+    "vue-property-decorator": "^8.4.2",
+    "vue-showdown": "^2.4.1",
+    "vue-template-compiler": "^2.6.11"
   }
 }
