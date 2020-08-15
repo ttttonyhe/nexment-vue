@@ -143,7 +143,7 @@ Use the nexment component:
 ## Use Nexment in Browsers
 Nexment can be used as a web component in browsers. That means it can work without a Vue.js instance. Follow the following steps to set it up:
 
-Add Nexment stylesheet to your <head> through CDN:
+Add Nexment stylesheet to your `<head>` through CDN:
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nexment-vue/dist/nexment-vue.css">
 ```
