@@ -31,7 +31,7 @@ Visit Nexment demo site at [https://nexment-vue-demo.ouorz.com](https://nexment-
 
 <br/>
 
-## Installation
+## Use Nexment in Vue.js projects
 Nexment is available for both React.js and Vue.js projects.
 ### Part I - LeanCloud
 1. Register / Login [LeanCloud](https://leancloud.cn/dashboard/login.html#/signup)
