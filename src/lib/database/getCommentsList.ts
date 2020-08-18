@@ -1,4 +1,4 @@
-import leanCloud from './initiation';
+import leanCloud from "./initiation";
 
 export interface commentsItemType {
   OID: string;
@@ -9,17 +9,17 @@ export interface commentsItemType {
   date: Date;
   email: string;
   tag: string;
-  replyList: commentsItemType[];
+  replyList: commentsItemType[] | undefined;
   hasReplies: boolean;
   link: string;
 }
 
 const listFetcher = (config: nexmentConfigType) => {
-    const AV = leanCloud(
-      config.leancloud.appId,
-      config.leancloud.appKey,
-      config.leancloud.serverURL
-    );
+  const AV = leanCloud(
+    config.leancloud.appId,
+    config.leancloud.appKey,
+    config.leancloud.serverURL
+  );
   /**
    *  Fetch comments data from the cloud
    *
@@ -30,12 +30,12 @@ const listFetcher = (config: nexmentConfigType) => {
     queryKey: string | number
   ): Promise<commentsItemType[]> => {
     // Maximum reply display depth 2
-    const query = new AV.Query('nexment_comments');
+    const query = new AV.Query("nexment_comments");
     var combineData: commentsItemType[] = [];
     var repliesData: any[] = [];
     // querykey is of type string, querying identifier
-    query.equalTo('identifier', queryKey);
-    query.descending('createdAt');
+    query.equalTo("identifier", queryKey);
+    query.descending("createdAt");
     return await query.find().then(
       async (
         items: {
@@ -49,36 +49,36 @@ const listFetcher = (config: nexmentConfigType) => {
         }[]
       ) => {
         // Store all reply data
-        items.map(async item => {
-          if (item.get('reply') !== undefined) {
-            if (repliesData[item.get('reply').toString()] === undefined) {
-              repliesData[item.get('reply').toString()] = [];
+        items.map(async (item) => {
+          if (item.get("reply") !== undefined) {
+            if (repliesData[item.get("reply").toString()] === undefined) {
+              repliesData[item.get("reply").toString()] = [];
             }
-            repliesData[item.get('reply').toString()].push({
-              OID: item.get('objectId'),
-              ID: item.get('ID'),
-              identifier: item.get('identifier'),
-              name: item.get('name'),
-              content: item.get('content'),
+            repliesData[item.get("reply").toString()].push({
+              OID: item.get("objectId"),
+              ID: item.get("ID"),
+              identifier: item.get("identifier"),
+              name: item.get("name"),
+              content: item.get("content"),
               date: item.createdAt,
-              email: item.get('email'),
-              tag: item.get('tag'),
-              link: item.get('link'),
-              hasReplies: item.get('hasReplies'),
+              email: item.get("email"),
+              tag: item.get("tag"),
+              link: item.get("link"),
+              hasReplies: item.get("hasReplies"),
             });
           }
         });
         // Construct list structure
-        items.map(async item => {
+        items.map(async (item) => {
           if (
-            (item.get('reply') === undefined && typeof queryKey === 'string') ||
-            typeof queryKey === 'number'
+            (item.get("reply") === undefined && typeof queryKey === "string") ||
+            typeof queryKey === "number"
           ) {
             // Get reply list recursively
             const repliesRecursion = (replyItemData: any[]) => {
-              replyItemData.map(item => {
+              replyItemData.map((item) => {
                 if (item.hasReplies) {
-                  item['replyList'] = repliesRecursion(
+                  item["replyList"] = repliesRecursion(
                     repliesData[item.ID.toString()]
                   );
                 }
@@ -86,23 +86,25 @@ const listFetcher = (config: nexmentConfigType) => {
               return replyItemData.reverse();
             };
             // Get all corresponding replies of current comment
-            let replyItemData: any[] = [];
-            if (item.get('hasReplies')) {
-              replyItemData = repliesData[item.get('ID').toString()];
-              replyItemData = repliesRecursion(replyItemData);
+            let replyItemData: any[] | undefined = [];
+            if (item.get("hasReplies")) {
+              replyItemData = repliesData[item.get("ID").toString()];
+              if (replyItemData) {
+                replyItemData = repliesRecursion(replyItemData);
+              }
             }
             const itemData = {
-              OID: item.get('objectId'),
-              ID: item.get('ID'),
-              identifier: item.get('identifier'),
-              name: item.get('name'),
-              content: item.get('content'),
+              OID: item.get("objectId"),
+              ID: item.get("ID"),
+              identifier: item.get("identifier"),
+              name: item.get("name"),
+              content: item.get("content"),
               date: item.createdAt,
               replyList: replyItemData,
-              email: item.get('email'),
-              tag: item.get('tag'),
-              link: item.get('link'),
-              hasReplies: item.get('hasReplies'),
+              email: item.get("email"),
+              tag: item.get("tag"),
+              link: item.get("link"),
+              hasReplies: item.get("hasReplies"),
             };
             combineData.push(itemData);
           }

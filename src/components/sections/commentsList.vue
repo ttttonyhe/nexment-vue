@@ -101,7 +101,7 @@
             </div>
           </div>
 
-          <div>
+          <div v-if="item.replyList">
             <ul class="nexment-comments-reply-list">
               <div
                 v-for="replyItem in item.replyList"
