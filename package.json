@@ -1,7 +1,7 @@
 {
   "name": "nexment-vue",
   "license": "MIT",
-  "version": "0.0.142",
+  "version": "0.0.143",
   "scripts": {
     "build-lib": "vue-cli-service build --target lib --name nexment-vue src/main.ts --inline-vue",
     "build-wc": "vue-cli-service build --target wc --name nexment-vue src/component.ts --dest dist-wc --inline-vue"
