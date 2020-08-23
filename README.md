@@ -1,5 +1,5 @@
 # Nexment-Vue
-Another lovely serverless comments library for Vue based on LeanCloud
+A feature-rich serverless comment library based on LeanCloud
 
 <p>
   <a href="https://www.npmjs.com/package/nexment-vue">
@@ -16,7 +16,7 @@ Another lovely serverless comments library for Vue based on LeanCloud
 <br/>
 
 ## See also
-+ Nexment for Vue.js [https://github.com/HelipengTony/nexment-vue](https://github.com/HelipengTony/nexment-vue)
++ Nexment for Vue.js / Web Component [https://github.com/HelipengTony/nexment-vue](https://github.com/HelipengTony/nexment-vue)
 + Nexment for React.js [https://github.com/HelipengTony/nexment](https://github.com/HelipengTony/nexment)
 
 <br/>
@@ -68,7 +68,8 @@ Setup nexment configuration:
 ```js
 const config = {
   pageKey: 'xxx' | undefined;
-  enableLinkInput: true | undefined,
+  enableLinkInput: true | false | undefined,
+  enableReplyListModal: true | false | undefined,
   leancloud: {
     appId: 'xxx',
     appKey: 'xxx',
@@ -121,7 +122,8 @@ Setup nexment configuration:
 ```js
 const config = {
   pageKey: 'xxx' | undefined;
-  enableLinkInput: true | undefined,
+  enableLinkInput: true | false | undefined,
+  enableReplyListModal: true | false | undefined,
   leancloud: {
     appId: 'xxx',
     appKey: 'xxx',
@@ -163,6 +165,7 @@ Use Nexment component in your page(`pagekey` is optional):
   appid="xxx"
   pagekey="xxx"
   enablelinkinput="xxx"
+  enableReplyListModal="xxx"
 ></nexment-container>
 ```
 
