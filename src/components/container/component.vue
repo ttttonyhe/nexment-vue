@@ -62,6 +62,8 @@ export default class NexmentContainer extends Vue {
 
   @Prop() public enablelinkinput!: boolean;
 
+  @Prop() public enableReplyListModal!: boolean;
+
   @Prop() public appid!: string;
 
   @Prop() public appkey!: string;
@@ -76,6 +78,7 @@ export default class NexmentContainer extends Vue {
   public configs: nexmentConfigType = {
     pageKey: undefined,
     enableLinkInput: false,
+    enableReplyListModal:false,
     leancloud: {
       appId: "",
       appKey: "",
@@ -102,6 +105,11 @@ export default class NexmentContainer extends Vue {
       this.configs,
       "enableLinkInput",
       this.enablelinkinput.toString() === "true" ? true : false
+    );
+    this.$set(
+      this.configs,
+      "enableReplyListModal",
+      this.enableReplyListModal.toString() === "true" ? true : false
     );
     this.$set(this.configs.leancloud, "appId", this.appid);
     this.$set(this.configs.leancloud, "appKey", this.appkey);
