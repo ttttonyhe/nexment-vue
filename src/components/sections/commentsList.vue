@@ -109,11 +109,16 @@
                 :key="replyItem.ID"
                 :id="replyItem.ID.toString()"
               >
-                <li
-                  class="nexment-comments-list-item"
-                  @click="handleReplyClickReply(replyItem)"
-                >
-                  <div class="nexment-comments-div">
+                <li class="nexment-comments-list-item">
+                  <div
+                    :class="
+                      'nexment-comments-div ' +
+                        (replyItem.hasReplies
+                          ? 'nexment-comments-div-with-replies'
+                          : '')
+                    "
+                    @click="handleReplyClickReply(replyItem)"
+                  >
                     <div class="nexment-comments-avatar">
                       <img :src="avatarSrc(replyItem)" />
                       <div
@@ -133,7 +138,7 @@
                         <span> · </span>
                         <b>{{ commentDate(replyItem) }}</b>
                         <b
-                          v-if="replyItem.hasReplies"
+                          v-if="replyItem.hasReplies && config.enableReplyListModal"
                           class="nexment-comments-replyto"
                         >
                           <span> · </span>
@@ -153,9 +158,26 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    v-if="replyItem.hasReplies && !config.enableReplyListModal"
+                  >
+                    <CommentsReplyList
+                      :config="config"
+                      :item="replyItem"
+                      :handleReplyClickReply="handleReplyClickReply"
+                      :avatarSrc="avatarSrc"
+                      :adminBadge="adminBadge"
+                      :commentDate="commentDate"
+                      :getLang="getLang"
+                    />
+                  </div>
                 </li>
                 <div
-                  v-if="replyItem.hasReplies && modalVisibility[replyItem.OID]"
+                  v-if="
+                    replyItem.hasReplies &&
+                      modalVisibility[replyItem.OID] &&
+                      config.enableReplyListModal
+                  "
                 >
                   <ReplyModal
                     @close="closeModal"
@@ -211,6 +233,9 @@ import ReplyModal from "@/components/modal/index.vue";
 // Comment area component
 import CommentsArea from "@/components/sections/CommentsArea.vue";
 
+// Comments reply list
+import CommentsReplyList from "@/components/sections/CommentsReplyList.vue";
+
 interface stateType {
   [name: string]: any;
   modalVisibility: any;
@@ -227,12 +252,14 @@ export default defineComponent({
     Icons,
     ReplyModal,
     CommentsArea,
+    CommentsReplyList,
   },
   setup(props: { config: nexmentConfigType }) {
     const { data, error, mutate } = useSWRV(
       props.config.pageKey ? props.config.pageKey : "/",
       listFetcher(props.config)
     );
+    console.log(props.config.enableReplyListModal);
     return {
       data,
       error,
@@ -262,7 +289,7 @@ export default defineComponent({
       window.location.href = "#nexment-comment-area";
     },
     handleReplyClickReply(item: any) {
-      if (item.hasReplies) {
+      if (item.hasReplies && this.config.enableReplyListModal) {
         // 深层 data 更新使用 Vue.set
         this.$set(this.modalVisibility, item.OID, true);
       } else {

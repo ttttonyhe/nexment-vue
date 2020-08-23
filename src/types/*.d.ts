@@ -3,10 +3,11 @@ declare module "*.vue" {
   export default Vue;
 }
 declare module "vue-content-loader";
-declare module '@vue/web-component-wrapper';
+declare module "@vue/web-component-wrapper";
 interface nexmentConfigType {
   pageKey?: string;
   enableLinkInput?: boolean;
+  enableReplyListModal?: boolean;
   leancloud: {
     appId: string;
     appKey: string;
