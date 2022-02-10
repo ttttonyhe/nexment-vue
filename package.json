@@ -27,7 +27,7 @@
     "js-md5": "^0.7.3",
     "leancloud-storage": "^4.6.1",
     "markdown-it": "^11.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "qs": "^6.9.4",
     "sass-loader": "^8.0.2",
     "swrv": "^0.7.2",
