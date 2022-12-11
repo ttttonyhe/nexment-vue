@@ -28,7 +28,7 @@
     "leancloud-storage": "^4.6.1",
     "markdown-it": "^11.0.0",
     "node-sass": "^4.12.0",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "sass-loader": "^8.0.2",
     "swrv": "^0.7.2",
     "timeago.js": "^4.0.2",
